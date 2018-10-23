@@ -31,5 +31,23 @@ module.exports = merge(webpackBaseConfig, {
             template: './src/template/index.ejs',
             inject: false
         })
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        stats: { colors: true },
+        proxy: {
+            '/jmx_gcs': {
+                target: 'http://localhost',
+                pathRewrite: {'^/jmx_gcs' : '/jmx_gcs'},
+                changeOrigin: true
+            },
+            '/druid': {
+                target: 'http://localhost',
+                pathRewrite: {'^/druid' : '/druid'},
+                changeOrigin: true
+            }
+        }
+    }
 });
